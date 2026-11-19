@@ -13,7 +13,7 @@
 (function () {
   /* Adresse de la base Firebase, ex. "https://johnnypmu-default-rtdb.europe-west1.firebasedatabase.app"
      Laisser vide pour rester sur Abacus. */
-  var FIREBASE_URL = "";
+  var FIREBASE_URL = "https://johnnypmu-ea422-default-rtdb.europe-west1.firebasedatabase.app";
 
   var ABACUS = "https://abacus.jasoncameron.dev";
 
