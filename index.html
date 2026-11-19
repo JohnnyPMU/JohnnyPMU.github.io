@@ -66,6 +66,12 @@
     background:var(--brushed),linear-gradient(180deg,#8a2a1f,#5b1610 60%,#4a110c);
     box-shadow:inset 0 1px 0 rgba(255,220,200,.35),0 0 0 1px #9b4a3a,0 6px 14px rgba(0,0,0,.6);text-shadow:0 1px 0 #000}
   .cta:active{transform:translateY(2px)}
+  /* après le clic : bouton or, texte noir, petite secousse */
+  .cta.loser{color:#1a1208;text-shadow:0 1px 0 rgba(255,255,255,.4);border-color:#3a2a06;
+    background:var(--brushed),linear-gradient(180deg,#ffe48a,#e0ac2e 55%,#b07d14);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 0 0 1px #f2c94c,0 0 22px rgba(242,180,40,.55),0 6px 14px rgba(0,0,0,.6);
+    animation:secousse .45s ease}
+  @keyframes secousse{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px) rotate(-1.5deg)}40%{transform:translateX(6px) rotate(1.5deg)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
 
   /* ---------- bande acier ---------- */
   .steel{padding:7px 0;white-space:nowrap;overflow:hidden;border-block:2px solid #000;
@@ -171,7 +177,7 @@
     <p class="subtitle">Les petits jeux Johnny PMU</p>
     <p class="tagline">Des mini-jeux absurdes, du rock'n'roll et des décisions qu'on assume rarement le lendemain.</p>
     <div class="pills"><span>Sans inscription</span><span>Direct sur mobile</span><span>Fait maison</span></div>
-    <a class="cta" href="#jeux">Entrer dans le saloon</a>
+    <a class="cta" id="cta" href="#jeux">Appuie ici pour être méga beau gosse</a>
   </section>
 
   <div class="steel" aria-label="Beer, BBQ, Freedom, Rock'n'roll, Bad decisions, PMU 4 life"><div class="steel-in" aria-hidden="true">
@@ -233,6 +239,18 @@
   }
   document.getElementById("games").innerHTML = cards.join("");
   document.getElementById("y").textContent = new Date().getFullYear();
+
+  /* ---------- bouton blague : 1er clic = « loser », puis on descend aux jeux ---------- */
+  const sonLoser = new Audio("loser.mp3");
+  sonLoser.preload = "auto";
+  document.getElementById("cta").addEventListener("click", function (e) {
+    if (this.classList.contains("loser")) return;      // 2e clic : descend normalement
+    e.preventDefault();
+    sonLoser.play().catch(() => {});                   // le son ne joue qu'une seule fois
+    this.textContent = "T'es vraiment qu'un gros loser !!!";
+    this.classList.add("loser");
+    setTimeout(() => document.getElementById("jeux").scrollIntoView({ behavior: "smooth" }), 1600);
+  });
 
   /* ---------- étincelles ---------- */
   (function () {
