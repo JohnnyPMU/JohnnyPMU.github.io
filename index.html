@@ -129,6 +129,9 @@
      - parties : comptées dans chaque jeu par compteur.js
      ============================================================ */
   const API = "https://abacus.jasoncameron.dev";
+  /* Coup de pouce au démarrage : ajouté au vrai chiffre à l'affichage.
+     (Les vrais chiffres restent dans Abacus : /get/johnnypmu/visites, etc.) */
+  const BONUS = { visites: 121, "ricard-parfait": 124 };
   const fmt = n => Number(n).toLocaleString("fr-FR");
   const getVal = url => fetch(url).then(r => r.ok ? r.json() : null).then(d => d && d.value).catch(() => null);
 
@@ -137,11 +140,13 @@
   getVal(`${API}/${dejaCompte ? "get" : "hit"}/johnnypmu/visites`).then(v => {
     if (v == null) return;
     try { sessionStorage.setItem("visiteComptee", "1"); } catch (e) {}
+    v += BONUS.visites || 0;
     document.getElementById("visits").textContent = `👀 ${fmt(v)} visite${v > 1 ? "s" : ""}`;
   });
 
   document.querySelectorAll(".plays[data-jeu]").forEach(el => {
     getVal(`${API}/get/johnnypmu/parties-${el.dataset.jeu}`).then(v => {
+      v = (v || 0) + (BONUS[el.dataset.jeu] || 0);
       el.textContent = `🎮 ${fmt(v || 0)} partie${v > 1 ? "s" : ""} jouée${v > 1 ? "s" : ""}`;
     });
   });
