@@ -124,7 +124,7 @@ const LINES={
   idle:["ALLEZ, SERS-MOI UN JAUNE, MAN !","J'AI SOIF COMME UN COWBOY DANS LE DÉSERT !","UN PETIT JAUNE ET JE RENTRE... PROMIS !","AMÉRICA... ET PASTIS !"],
   wait:["BON, TU VERSES OU TU PRIES ?","J'AI LE GOSIER SEC, BRO !","HEY ! LA CARAFE, ELLE VA PAS SE VERSER TOUTE SEULE !"],
   pile:["PILE POIL ! T'ES LE BARMAN DE L'ANNÉE, BRO !","OH MY GOD... C'EST BEAU COMME LE TEXAS !","GOD BLESS LA FRANCE ET TON POIGNET !"],
-  perfect:["ÇA C'EST UN VRAI JAUNE, MON POTE !","YEEHAW ! PARFAIT !","MÊME MAMAN LE SERVAIT PAS COMME ÇA !"],
+  perfect:["ÇA C'EST UN VRAI JAUNE, MON POTE !","YEEHAW ! PARFAIT !","MÊME LE PATRON LE SERT PAS COMME ÇA !"],
   good:["PAS MAL, COWBOY.","ÇA PASSE... J'AI VU PIRE À DALLAS.","BOF... MAIS JE BOIS QUAND MÊME."],
   little:["C'EST DU SIROP, LÀ ! T'ES RADIN SUR L'EAU ?","ÇA ARRACHE LA GORGE, MAN !","JE VAIS CRACHER DU FEU COMME UN DRAGON !"],
   much:["C'EST DE LA FLOTTE ÇA, MON POTE !","TU VEUX ME NOYER OU QUOI ?!","ON EST PAS À LA PISCINE MUNICIPALE !"],
@@ -371,7 +371,7 @@ function drawJohnnyArm(c){
   // tattoo on the upper arm
   c.save();c.translate(360,520);c.rotate(-0.25);
   c.fillStyle='#d62828';c.beginPath();c.moveTo(0,8);c.bezierCurveTo(-16,-4,-10,-16,0,-8);c.bezierCurveTo(10,-16,16,-4,0,8);c.fill();
-  c.font='13px '+FONT;c.textAlign='center';c.textBaseline='middle';c.fillStyle='#1e4fd8';c.fillText('MOM',0,-1);c.restore();
+  c.restore();
   // hand flat on the counter with visible fingers
   c.beginPath();c.moveTo(338,724);c.quadraticCurveTo(336,708,356,706);c.lineTo(378,708);c.quadraticCurveTo(392,712,390,726);c.lineTo(392,744);
   c.lineTo(334,744);c.closePath();ink(c,SKIN,4);
