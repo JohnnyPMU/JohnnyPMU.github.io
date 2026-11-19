@@ -15,7 +15,7 @@ canvas{display:block;touch-action:none;box-shadow:0 0 50px #000}
 <div id="wrap"><canvas id="c"></canvas></div>
 <script>
 (()=>{
-const W=540,H=960,INK='#1b0f0c',SKIN='#f2b080',FONT='Bangers, Impact, sans-serif';
+const W=540,H=960,TOP=240,VH=H-TOP,INK='#1b0f0c',SKIN='#f2b080',FONT='Bangers, Impact, sans-serif';
 const cv=document.getElementById('c'),ctx=cv.getContext('2d');
 let S=1,DPR=1,t=0;
 const bgBack=document.createElement('canvas'),bgFront=document.createElement('canvas');
@@ -170,13 +170,13 @@ function drawFront(c){
   halftone(c,0.08);
 }
 function buildBG(){
-  [[bgBack,drawBack],[bgFront,drawFront]].forEach(([cn,fn])=>{cn.width=cv.width;cn.height=cv.height;const c=cn.getContext('2d');c.setTransform(S*DPR,0,0,S*DPR,0,0);fn(c);});
+  [[bgBack,drawBack],[bgFront,drawFront]].forEach(([cn,fn])=>{cn.width=Math.round(W*S*DPR);cn.height=Math.round(H*S*DPR);const c=cn.getContext('2d');c.setTransform(S*DPR,0,0,S*DPR,0,0);fn(c);});
 }
 function resize(){
   DPR=Math.min(window.devicePixelRatio||1,2);
-  S=Math.min(innerWidth/W,innerHeight/H);
-  cv.style.width=Math.round(W*S)+'px';cv.style.height=Math.round(H*S)+'px';
-  cv.width=Math.round(W*S*DPR);cv.height=Math.round(H*S*DPR);
+  S=Math.min(innerWidth/W,innerHeight/VH);
+  cv.style.width=Math.round(W*S)+'px';cv.style.height=Math.round(VH*S)+'px';
+  cv.width=Math.round(W*S*DPR);cv.height=Math.round(VH*S*DPR);
   buildBG();
 }
 addEventListener('resize',resize);resize();
@@ -612,7 +612,7 @@ function update(dt){
     pourFilter.frequency.setTargetAtTime(600+G.level*2400,AC.currentTime,0.05);}
 }
 function draw(){
-  const c=ctx;c.setTransform(S*DPR,0,0,S*DPR,0,0);
+  const c=ctx;c.setTransform(S*DPR,0,0,S*DPR,0,-TOP*S*DPR);
   c.fillStyle='#140a06';c.fillRect(0,0,W,H);
   c.save();c.beginPath();c.rect(0,240,W,H-240);c.clip();
   if(G.shake>0)c.translate(rnd(-1,1)*G.shake,rnd(-1,1)*G.shake);
@@ -638,7 +638,6 @@ function draw(){
   c.restore();
   if(G.state==='title')drawTitle(c);
   if(G.state==='over'){drawOver(c);}
-  drawCamZone(c);
 }
 let last=performance.now();
 function loop(now){const dt=Math.min(0.05,(now-last)/1000);last=now;update(dt);draw();requestAnimationFrame(loop);}
