@@ -7,100 +7,204 @@
 <meta name="description" content="Les mini-jeux de Johnny PMU : humour franchouillard, jouables directement sur ton téléphone.">
 <meta property="og:title" content="Johnny PMU – Les mini-jeux">
 <meta property="og:description" content="Des petits jeux absurdes, jouables directement dans ton navigateur.">
-<meta name="theme-color" content="#14110f">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍺</text></svg>">
+<meta name="theme-color" content="#0f0b09">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='14' fill='%23b8461b'/><text x='50' y='72' font-family='Georgia' font-weight='bold' font-size='62' text-anchor='middle' fill='%23f1e4c6'>J</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#14110f; --panel:#1f1a16; --line:#3a2f26; --text:#f4ece1; --muted:#b9a993;
-    --accent:#f2b134; --accent2:#e4572e; --green:#3fae6a;
+    --bg:#0f0b09; --text:#efe4cf; --muted:#b7a68c; --cream:#efe2c4;
+    --red:#b3171f; --blue:#1d2c5c; --gold:#d9a441; --rust:#9c461a;
+    /* texture de rouille (bruit) */
+    --noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .22 0 0 0 0 .06 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    /* grosses taches de rouille pour les lettres */
+    --rustspots:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.018 .05' numOctaves='4' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 .62 0 0 0 0 .27 0 0 0 0 .08 0 0 0 -2.6 1.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23r)'/%3E%3C/svg%3E");
+    --steel:linear-gradient(180deg,#f2eee6 0%,#b9b3a9 30%,#6f6961 50%,#cfc9be 68%,#8b857c 100%);
+    --rivet:radial-gradient(circle at 40% 35%,#e6ddd2 0 1.5px,#857868 3px,#241810 5px,transparent 6px);
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html,body{background:var(--bg);color:var(--text)}
+  html{background:var(--bg)}
   body{
-    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-    min-height:100vh;line-height:1.5;
+    font-family:Oswald,"Arial Narrow",system-ui,sans-serif;color:var(--text);
+    min-height:100vh;line-height:1.45;overflow-x:hidden;
     background:
-      radial-gradient(1200px 500px at 50% -10%, rgba(242,177,52,.14), transparent 70%),
-      var(--bg);
+      radial-gradient(1000px 520px at 50% -8%, rgba(156,70,26,.35), transparent 70%),
+      radial-gradient(120% 80% at 50% 50%, transparent 55%, rgba(0,0,0,.65)),
+      linear-gradient(rgba(10,8,7,.55),rgba(10,8,7,.55)),
+      var(--noise),
+      #141110;
   }
-  .wrap{max-width:980px;margin:0 auto;padding:28px 18px 60px}
-  .banner{display:block;width:100%;height:auto;border-radius:16px;border:1px solid var(--line);box-shadow:0 10px 40px rgba(228,87,46,.25)}
-  header{text-align:center;padding:26px 0 34px}
-  .perks{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:20px}
-  .perks span{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:14px;font-weight:600}
-  .letsgo{margin-top:20px;font-family:"Arial Black","Impact",system-ui,sans-serif;font-size:clamp(20px,5vw,26px);color:var(--accent2);transform:rotate(-2deg)}
-  .badge{
-    display:inline-block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--accent);border:1px solid var(--line);border-radius:999px;padding:5px 12px;margin-bottom:18px;
+  .wrap{max-width:980px;margin:0 auto;padding:22px 16px 0}
+
+  /* ---------- lettres en acier rouillé ---------- */
+  .metal{
+    font-family:"Alfa Slab One",Georgia,serif;font-weight:400;text-transform:uppercase;
+    background:var(--rustspots) 0 0/320px 160px,var(--steel);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:
+      drop-shadow(0 -1px 0 rgba(255,255,255,.35))
+      drop-shadow(0 2px 0 #2b1a10)
+      drop-shadow(0 4px 0 #160d08)
+      drop-shadow(0 12px 14px rgba(0,0,0,.75));
   }
-  h1{
-    font-family:"Arial Black","Impact",system-ui,sans-serif;
-    font-size:clamp(28px,7vw,52px);line-height:1.1;letter-spacing:-.01em;
+
+  /* ---------- plaque de métal rouillé ---------- */
+  .plate{
+    position:relative;border-radius:6px;
+    background:
+      var(--rivet) left 8px top 8px/14px 14px no-repeat,
+      var(--rivet) right 8px top 8px/14px 14px no-repeat,
+      var(--rivet) left 8px bottom 8px/14px 14px no-repeat,
+      var(--rivet) right 8px bottom 8px/14px 14px no-repeat,
+      radial-gradient(140px 90px at 12% 18%, rgba(156,70,26,.6), transparent 70%),
+      radial-gradient(200px 110px at 90% 85%, rgba(156,70,26,.5), transparent 70%),
+      var(--noise),
+      linear-gradient(165deg,#4a4540,#2d2925 55%,#3b3530);
+    border:1px solid #000;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.14),inset 0 0 0 3px rgba(0,0,0,.25),inset 0 -6px 14px rgba(0,0,0,.45),0 10px 26px rgba(0,0,0,.6);
   }
-  h1 span{color:var(--accent)}
-  .tagline{color:var(--muted);font-size:clamp(16px,3.6vw,19px);margin:16px auto 0;max-width:560px}
-  .section-title{
-    display:flex;align-items:center;gap:12px;font-size:13px;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--muted);margin:10px 0 16px;
+
+  /* ---------- bannière ---------- */
+  .banner-frame{padding:14px}
+  .banner{display:block;width:100%;height:auto;border-radius:2px;border:1px solid #000;box-shadow:0 0 0 2px rgba(255,255,255,.06)}
+
+  /* ---------- bande défilante (acier gravé) ---------- */
+  .ticker{
+    margin:18px -16px 0;overflow:hidden;border-block:1px solid #000;
+    background:var(--noise),linear-gradient(180deg,#2a2622,#1a1714);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.08),inset 0 -1px 0 rgba(255,255,255,.04);
   }
-  .section-title::after{content:"";flex:1;height:1px;background:var(--line)}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
-  .card{
-    background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;
-    display:flex;flex-direction:column;text-decoration:none;color:inherit;
-    transition:transform .15s ease,border-color .15s ease;
+  .ticker-in{display:flex;width:max-content;animation:defile 40s linear infinite}
+  .ticker span{font-weight:500;font-size:15px;letter-spacing:.32em;text-transform:uppercase;padding:9px 0;white-space:nowrap;color:#8f857a;text-shadow:0 1px 0 rgba(255,255,255,.08),0 -1px 0 #000}
+  .ticker b{color:var(--red);font-weight:500;padding:0 .9em}
+  @keyframes defile{to{transform:translateX(-50%)}}
+
+  /* ---------- titre ---------- */
+  header{text-align:center;padding:38px 0 8px}
+  .kicker{display:flex;align-items:center;justify-content:center;gap:14px;font-weight:500;font-size:clamp(14px,3.6vw,18px);letter-spacing:.45em;text-transform:uppercase;color:var(--muted)}
+  .kicker::before,.kicker::after{content:"";height:2px;width:clamp(30px,10vw,90px);background:linear-gradient(90deg,transparent,#7d746a)}
+  .kicker::after{transform:scaleX(-1)}
+  h1{margin-top:10px;line-height:.92}
+  h1 .metal{display:block;font-size:clamp(50px,14.5vw,124px);letter-spacing:.01em}
+  .by{display:inline-flex;align-items:center;gap:12px;margin-top:16px;font-weight:700;font-size:clamp(18px,4.8vw,26px);letter-spacing:.22em;text-transform:uppercase;color:var(--cream)}
+  .by i{font-style:normal;color:var(--muted);font-weight:400}
+  .by span{background:var(--red);color:#fff;padding:2px 12px 1px;letter-spacing:.14em;box-shadow:0 3px 0 #5c0a0f}
+
+  /* ---------- étiquettes estampées ---------- */
+  .tags{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:30px}
+  .tag{
+    font-weight:500;font-size:14px;letter-spacing:.18em;text-transform:uppercase;color:#d9cdb8;
+    padding:9px 18px 8px;border:1px solid #000;border-radius:3px;
+    background:var(--noise),linear-gradient(180deg,#3d3833,#26221f);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 3px 8px rgba(0,0,0,.5);
+    text-shadow:0 -1px 0 #000;
   }
-  .card:hover{transform:translateY(-3px);border-color:var(--accent)}
+  .tag::before{content:"■";color:var(--red);font-size:9px;vertical-align:2px;margin-right:9px}
+
+  /* ---------- enseigne peinte ---------- */
+  .letsgo{
+    display:inline-block;margin-top:32px;padding:10px 26px 8px;transform:rotate(-2deg);
+    font-family:"Alfa Slab One",Georgia,serif;font-size:clamp(20px,5.6vw,30px);letter-spacing:.04em;text-transform:uppercase;color:#f6efe2;
+    background:var(--rustspots) 0 0/260px 130px,linear-gradient(180deg,#c21d25,#8f1118);
+    border:1px solid #000;border-radius:3px;
+    box-shadow:inset 0 0 0 3px rgba(255,255,255,.12),0 8px 20px rgba(0,0,0,.6);
+    text-shadow:0 2px 0 #4a070b;
+  }
+
+  /* ---------- séparateur ---------- */
+  .section{display:flex;align-items:center;gap:16px;margin:56px 0 24px}
+  .section::before,.section::after{content:"";flex:1;height:14px;
+    background:repeating-linear-gradient(180deg,var(--red) 0 2px,transparent 2px 4px,#e9dfcc 4px 6px,transparent 6px 8px);opacity:.75}
+  .section h2{font-size:clamp(30px,8vw,46px);letter-spacing:.04em;white-space:nowrap}
+
+  /* ---------- cartes de jeux ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:22px}
+  .card{display:flex;flex-direction:column;text-decoration:none;color:inherit;padding:16px;transition:transform .15s ease}
+  .card:hover{transform:translateY(-4px)}
   .thumb{
-    aspect-ratio:16/10;display:grid;place-items:center;font-size:64px;
-    background:linear-gradient(135deg,#2a211b,#3b2a1e);border-bottom:1px solid var(--line);
+    position:relative;aspect-ratio:16/10;display:grid;place-items:center;text-align:center;padding:16px;border-radius:3px;overflow:hidden;
+    background:var(--noise),radial-gradient(80% 90% at 50% 110%,rgba(156,70,26,.55),transparent 70%),linear-gradient(180deg,#141110,#221c18);
+    border:1px solid #000;box-shadow:inset 0 0 40px rgba(0,0,0,.8);
   }
-  .thumb img{width:100%;height:100%;object-fit:cover}
-  .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
-  .body h3{font-size:18px}
-  .body p{color:var(--muted);font-size:14px;flex:1}
+  .thumb .metal{font-size:clamp(26px,7vw,34px);line-height:1}
+  .thumb .num{position:absolute;top:10px;left:12px;font-weight:500;font-size:12px;letter-spacing:.3em;color:#7d746a}
+  .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .body{padding:16px 2px 2px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .body h3{font-family:"Alfa Slab One",Georgia,serif;font-weight:400;font-size:22px;line-height:1.1;color:var(--cream);text-transform:uppercase;text-shadow:0 2px 0 #000}
+  .body p{color:#cbbda6;font-size:15px;flex:1}
+  .plays{font-weight:500;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);min-height:1em}
   .play{
-    align-self:flex-start;margin-top:6px;background:var(--accent);color:#1a1208;
-    font-weight:800;font-size:14px;padding:9px 16px;border-radius:10px;
+    align-self:stretch;text-align:center;margin-top:8px;
+    font-weight:700;font-size:20px;letter-spacing:.3em;text-transform:uppercase;color:#fff;
+    background:linear-gradient(180deg,#c9202a,#93111a);border:1px solid #000;border-radius:3px;padding:10px 16px 9px;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.3),inset 0 -2px 0 rgba(0,0,0,.25),0 4px 0 #3d0609;text-shadow:0 -1px 0 #4a070b;
   }
-  .empty{
-    border:1px dashed var(--line);border-radius:16px;padding:40px 20px;text-align:center;color:var(--muted);
+  .card:active .play{transform:translateY(3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 1px 0 #3d0609}
+  .empty{padding:40px 20px;text-align:center;color:var(--cream)}
+  .empty strong{display:block;font-family:"Alfa Slab One",Georgia,serif;font-weight:400;font-size:22px;margin-bottom:6px;text-transform:uppercase}
+
+  /* ---------- pied de page : tôle larmée ---------- */
+  footer{
+    margin-top:64px;padding:30px 16px 34px;text-align:center;border-top:1px solid #000;
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30'%3E%3Cg stroke='%23171513' stroke-width='1'%3E%3Crect x='3' y='5.5' width='13' height='4' rx='2' fill='%23b0aaa1' transform='rotate(45 9.5 7.5)'/%3E%3Crect x='14' y='20.5' width='13' height='4' rx='2' fill='%23b0aaa1' transform='rotate(-45 20.5 22.5)'/%3E%3C/g%3E%3C/svg%3E") 0 0/30px 30px,
+      var(--noise),
+      linear-gradient(180deg,#5d5852,#3a3632);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.15),inset 0 14px 24px rgba(0,0,0,.55);
   }
-  .empty strong{display:block;color:var(--text);font-size:18px;margin-bottom:6px}
-  .plays{color:var(--accent);font-size:13px;font-weight:700;min-height:1em}
-  .visits{display:inline-block;margin-bottom:12px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:14px;font-weight:700;color:var(--text)}
-  .visits:empty{display:none}
-  footer{margin-top:48px;text-align:center;color:var(--muted);font-size:13px}
-  footer a{color:var(--accent);text-decoration:none}
+  .counter{display:inline-flex;flex-direction:column;align-items:center;gap:8px;padding:14px 22px 12px;margin-bottom:18px}
+  .counter:empty{display:none}
+  .digits{display:flex;gap:4px}
+  .digits b{
+    display:grid;place-items:center;width:30px;height:42px;font-weight:700;font-size:28px;color:#f3ead8;border-radius:3px;
+    background:linear-gradient(180deg,#0b0908 0%,#2a2521 48%,#0b0908 52%,#1f1b18 100%);
+    box-shadow:inset 0 0 0 1px #000,inset 0 2px 4px rgba(0,0,0,.8);
+  }
+  .counter small{font-weight:500;font-size:12px;letter-spacing:.4em;text-transform:uppercase;color:#d9cdb8;text-shadow:0 -1px 0 #000}
+  .copy{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#d6cbb9;text-shadow:0 1px 2px #000}
+
+  @media (prefers-reduced-motion:reduce){ .ticker-in{animation:none} }
 </style>
 </head>
 <body>
   <div class="wrap">
-    <img class="banner" src="banniere.jpg" width="1600" height="595" alt="Johnny PMU">
+    <div class="plate banner-frame">
+      <img class="banner" src="banniere.jpg" width="1600" height="595" alt="Johnny PMU">
+    </div>
+
+    <div class="ticker" aria-hidden="true"><div class="ticker-in">
+      <span>Beer<b>★</b>BBQ<b>★</b>Freedom<b>★</b>Rock'n'roll<b>★</b>Bad decisions<b>★</b>Pastis<b>★</b>Good times<b>★</b>PMU 4 life<b>★</b></span>
+      <span>Beer<b>★</b>BBQ<b>★</b>Freedom<b>★</b>Rock'n'roll<b>★</b>Bad decisions<b>★</b>Pastis<b>★</b>Good times<b>★</b>PMU 4 life<b>★</b></span>
+    </div></div>
+
     <header>
-      <h1>Les petits jeux <span>What the fuck</span><br>de Johnny PMU</h1>
-      <div class="perks">
-        <span>📱 Joue depuis ton téléphone</span>
-        <span>🚫 Pas d'inscription</span>
-        <span>👆 Tu cliques, tu joues</span>
+      <div class="kicker">Les petits jeux</div>
+      <h1><span class="metal">What the fuck</span></h1>
+      <div class="by"><i>de</i><span>Johnny PMU</span></div>
+      <div class="tags">
+        <span class="tag">Joue depuis ton téléphone</span>
+        <span class="tag">Pas d'inscription</span>
+        <span class="tag">Tu cliques, tu joues</span>
       </div>
-      <p class="letsgo">Let's go ma poule ! 🐔</p>
+      <p class="letsgo">Let's go ma poule !</p>
     </header>
 
-    <div class="section-title">Les jeux</div>
+    <div class="section"><h2 class="metal">Les jeux</h2></div>
     <main id="games" class="grid"></main>
-
-    <footer>
-      <div id="visits" class="visits"></div><br>
-      © <span id="y"></span> Johnny PMU · Jeux faits maison, humour garanti
-    </footer>
   </div>
+
+  <footer>
+    <div id="visits" class="plate counter"></div>
+    <div class="copy">© <span id="y"></span> Johnny PMU — Jeux faits maison, humour garanti</div>
+  </footer>
 
 <script>
   /* ============================================================
      LISTE DES JEUX
      Pour ajouter un jeu : mettre son dossier dans le dépôt
      (ex. ricard-parfait/index.html) puis ajouter une ligne ici.
+     (emoji : plus affiché, gardé pour info)
      ============================================================ */
   const GAMES = [
     { titre: "Le Ricard Parfait", dossier: "ricard-parfait", emoji: "🥃", description: "Sers un jaune à Johnny : dose parfaite ou catastrophe au comptoir ?" },
@@ -108,16 +212,19 @@
 
   const el = document.getElementById("games");
   if (!GAMES.length) {
-    el.outerHTML = '<div class="empty"><strong>Les premiers jeux arrivent bientôt 🍻</strong>Repasse dans pas longtemps.</div>';
+    el.outerHTML = '<div class="plate empty"><strong>Les premiers jeux arrivent bientôt</strong>Repasse dans pas longtemps.</div>';
   } else {
-    el.innerHTML = GAMES.map(g => `
-      <a class="card" href="${g.dossier}/">
-        <div class="thumb">${g.image ? `<img src="${g.image}" alt="">` : (g.emoji || "🎮")}</div>
+    el.innerHTML = GAMES.map((g, i) => `
+      <a class="card plate" href="${g.dossier}/">
+        <div class="thumb">
+          <span class="num">N°${String(i + 1).padStart(2, "0")}</span>
+          ${g.image ? `<img src="${g.image}" alt="">` : `<span class="metal">${g.titre}</span>`}
+        </div>
         <div class="body">
           <h3>${g.titre}</h3>
           <p>${g.description || ""}</p>
           <span class="plays" data-jeu="${g.dossier}"></span>
-          <span class="play">▶ Jouer</span>
+          <span class="play">Jouer</span>
         </div>
       </a>`).join("");
   }
@@ -141,13 +248,14 @@
     if (v == null) return;
     try { sessionStorage.setItem("visiteComptee", "1"); } catch (e) {}
     v += BONUS.visites || 0;
-    document.getElementById("visits").textContent = `👀 ${fmt(v)} visite${v > 1 ? "s" : ""}`;
+    const digits = String(v).padStart(5, "0").split("").map(d => `<b>${d}</b>`).join("");
+    document.getElementById("visits").innerHTML = `<div class="digits">${digits}</div><small>Visite${v > 1 ? "s" : ""}</small>`;
   });
 
   document.querySelectorAll(".plays[data-jeu]").forEach(el => {
     getVal(`${API}/get/johnnypmu/parties-${el.dataset.jeu}`).then(v => {
       v = (v || 0) + (BONUS[el.dataset.jeu] || 0);
-      el.textContent = `🎮 ${fmt(v || 0)} partie${v > 1 ? "s" : ""} jouée${v > 1 ? "s" : ""}`;
+      el.textContent = `${fmt(v)} partie${v > 1 ? "s" : ""} jouée${v > 1 ? "s" : ""}`;
     });
   });
 </script>
