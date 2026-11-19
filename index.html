@@ -3,232 +3,253 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Johnny PMU – Les petits jeux What the fuck</title>
-<meta name="description" content="Les mini-jeux de Johnny PMU : humour franchouillard, jouables directement sur ton téléphone.">
-<meta property="og:title" content="Johnny PMU – Les mini-jeux">
-<meta property="og:description" content="Des petits jeux absurdes, jouables directement dans ton navigateur.">
-<meta name="theme-color" content="#0f0b09">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='14' fill='%23b8461b'/><text x='50' y='72' font-family='Georgia' font-weight='bold' font-size='62' text-anchor='middle' fill='%23f1e4c6'>J</text></svg>">
+<title>Johnny PMU – What the fuck games</title>
+<meta name="description" content="Les petits jeux Johnny PMU : des mini-jeux absurdes, jouables directement sur ton téléphone.">
+<meta property="og:title" content="Johnny PMU – What the fuck games">
+<meta property="og:description" content="Des mini-jeux absurdes, du rock'n'roll et des décisions qu'on assume rarement le lendemain.">
+<meta name="theme-color" content="#111111">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='14' fill='%237a1c14'/><text x='50' y='72' font-family='Arial' font-weight='bold' font-size='62' text-anchor='middle' fill='%23f1dcc0'>J</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600;700&family=Yellowtail&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0f0b09; --text:#efe4cf; --muted:#b7a68c; --cream:#efe2c4;
-    --red:#b3171f; --blue:#1d2c5c; --gold:#d9a441; --rust:#9c461a;
-    /* texture de rouille (bruit) */
-    --noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .22 0 0 0 0 .06 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    /* grosses taches de rouille pour les lettres */
-    --rustspots:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.018 .05' numOctaves='4' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 .62 0 0 0 0 .27 0 0 0 0 .08 0 0 0 -2.6 1.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23r)'/%3E%3C/svg%3E");
-    --steel:linear-gradient(180deg,#f2eee6 0%,#b9b3a9 30%,#6f6961 50%,#cfc9be 68%,#8b857c 100%);
-    --rivet:radial-gradient(circle at 40% 35%,#e6ddd2 0 1.5px,#857868 3px,#241810 5px,transparent 6px);
+    --bg:#111; --cream:#efe1c8; --muted:#b9ab96; --red:#c4342a; --red-d:#5a120c;
+    --noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    --brushed:repeating-linear-gradient(180deg,rgba(255,255,255,.05) 0 1px,rgba(0,0,0,.06) 1px 2px,transparent 2px 3px);
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{background:var(--bg)}
-  body{
-    font-family:Oswald,"Arial Narrow",system-ui,sans-serif;color:var(--text);
-    min-height:100vh;line-height:1.45;overflow-x:hidden;
-    background:
-      radial-gradient(1000px 520px at 50% -8%, rgba(156,70,26,.35), transparent 70%),
-      radial-gradient(120% 80% at 50% 50%, transparent 55%, rgba(0,0,0,.65)),
-      linear-gradient(rgba(10,8,7,.55),rgba(10,8,7,.55)),
-      var(--noise),
-      #141110;
-  }
-  .wrap{max-width:980px;margin:0 auto;padding:22px 16px 0}
+  html{background:var(--bg);scroll-behavior:smooth}
+  body{font-family:Oswald,"Arial Narrow",system-ui,sans-serif;color:var(--cream);background:var(--noise),#141414;overflow-x:hidden;line-height:1.35}
+  .page{max-width:1000px;margin:0 auto;background:var(--noise),linear-gradient(180deg,#1b1b1b,#121212);box-shadow:0 0 60px rgba(0,0,0,.8)}
+  a{color:inherit}
 
-  /* ---------- lettres en acier rouillé ---------- */
-  .metal{
-    font-family:"Alfa Slab One",Georgia,serif;font-weight:400;text-transform:uppercase;
-    background:var(--rustspots) 0 0/320px 160px,var(--steel);
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-    filter:
-      drop-shadow(0 -1px 0 rgba(255,255,255,.35))
-      drop-shadow(0 2px 0 #2b1a10)
-      drop-shadow(0 4px 0 #160d08)
-      drop-shadow(0 12px 14px rgba(0,0,0,.75));
-  }
-
-  /* ---------- plaque de métal rouillé ---------- */
-  .plate{
-    position:relative;border-radius:6px;
-    background:
-      var(--rivet) left 8px top 8px/14px 14px no-repeat,
-      var(--rivet) right 8px top 8px/14px 14px no-repeat,
-      var(--rivet) left 8px bottom 8px/14px 14px no-repeat,
-      var(--rivet) right 8px bottom 8px/14px 14px no-repeat,
-      radial-gradient(140px 90px at 12% 18%, rgba(156,70,26,.6), transparent 70%),
-      radial-gradient(200px 110px at 90% 85%, rgba(156,70,26,.5), transparent 70%),
-      var(--noise),
-      linear-gradient(165deg,#4a4540,#2d2925 55%,#3b3530);
-    border:1px solid #000;
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.14),inset 0 0 0 3px rgba(0,0,0,.25),inset 0 -6px 14px rgba(0,0,0,.45),0 10px 26px rgba(0,0,0,.6);
-  }
+  /* ---------- barre du haut ---------- */
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px clamp(10px,3vw,22px);
+    background:var(--brushed),linear-gradient(180deg,#2c2c2c,#191919);border-bottom:2px solid #000;box-shadow:inset 0 -1px 0 rgba(255,255,255,.08)}
+  .topbar span{font-weight:500;font-size:clamp(8px,2.3vw,15px);letter-spacing:.06em;text-transform:uppercase;color:#d9ccb6;white-space:nowrap}
+  .miniflag{display:flex;gap:3px;flex:0 0 auto}
+  .miniflag i{display:block;width:clamp(14px,4vw,30px);height:3px}
+  .miniflag i:nth-child(1){background:#2b3f8f}.miniflag i:nth-child(2){background:#e9e4da}.miniflag i:nth-child(3){background:#b3231a}
 
   /* ---------- bannière ---------- */
-  .banner-frame{padding:14px}
-  .banner{display:block;width:100%;height:auto;border-radius:2px;border:1px solid #000;box-shadow:0 0 0 2px rgba(255,255,255,.06)}
+  .banner-wrap{padding:clamp(6px,1.4vw,10px);background:linear-gradient(180deg,#3a3a3a,#1c1c1c);border-bottom:3px solid #000}
+  .banner{display:block;width:100%;height:auto;border:2px solid #000;box-shadow:0 0 0 1px #555}
 
-  /* ---------- bande défilante (acier gravé) ---------- */
-  .ticker{
-    margin:18px -16px 0;overflow:hidden;border-block:1px solid #000;
-    background:var(--noise),linear-gradient(180deg,#2a2622,#1a1714);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.08),inset 0 -1px 0 rgba(255,255,255,.04);
+  /* ---------- hero ---------- */
+  .hero{position:relative;overflow:hidden;text-align:center;padding:clamp(22px,5vw,40px) 16px clamp(26px,6vw,46px);
+    background:radial-gradient(70% 60% at 50% 30%,rgba(60,60,60,.35),transparent 70%),var(--noise),#151515}
+  .fire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+  .spark{position:absolute;border-radius:50%;background:#ffc46b;box-shadow:0 0 6px 2px rgba(255,120,30,.8);pointer-events:none;animation:twinkle ease-in-out infinite alternate}
+  @keyframes twinkle{from{opacity:.15}to{opacity:1}}
+  .hero > *:not(.fire):not(.spark){position:relative}
+  .presente{font-weight:500;font-size:clamp(12px,3.2vw,20px);letter-spacing:.12em;text-transform:uppercase;color:#d8cbb4}
+  .wtf{
+    font-family:Anton,Oswald,Impact,sans-serif;font-weight:400;text-transform:uppercase;line-height:1;margin-top:4px;
+    font-size:clamp(34px,10.4vw,92px);letter-spacing:.01em;
+    background:var(--brushed),linear-gradient(180deg,#e8e4dc 0%,#a9a49b 38%,#5f5b55 52%,#b7b1a6 70%,#77726b 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 -1px 0 rgba(255,255,255,.3)) drop-shadow(0 2px 0 #000) drop-shadow(0 6px 10px rgba(0,0,0,.8));
   }
-  .ticker-in{display:flex;width:max-content;animation:defile 40s linear infinite}
-  .ticker span{font-weight:500;font-size:15px;letter-spacing:.32em;text-transform:uppercase;padding:9px 0;white-space:nowrap;color:#8f857a;text-shadow:0 1px 0 rgba(255,255,255,.08),0 -1px 0 #000}
-  .ticker b{color:var(--red);font-weight:500;padding:0 .9em}
+  /* sous-titre : script hot-rod en or chromé */
+  .subtitle{display:inline-block;margin-top:4px;padding:0 .25em .1em;transform:rotate(-3deg);
+    font-family:Yellowtail,cursive;font-weight:400;font-size:clamp(30px,8.6vw,56px);line-height:1.1;
+    background:linear-gradient(180deg,#fff4c4 0%,#f3cf6b 28%,#b8862b 50%,#f6d77e 66%,#9a6a1c 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 -1px 0 rgba(255,255,255,.35)) drop-shadow(0 2px 0 #2a1306) drop-shadow(0 4px 8px rgba(0,0,0,.85))}
+  .tagline{margin:8px auto 0;max-width:520px;font-size:clamp(12px,3vw,18px);color:#d4c8b4;font-weight:400}
+  .pills{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:14px}
+  .pills span{font-weight:500;font-size:clamp(10px,2.5vw,14px);text-transform:uppercase;letter-spacing:.04em;color:#e2d6c1;
+    padding:3px 10px;border:1px solid #6d6150;border-radius:4px;background:rgba(0,0,0,.45);box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+  .cta{display:inline-block;margin-top:18px;text-decoration:none;font-weight:600;font-size:clamp(15px,4vw,24px);text-transform:uppercase;letter-spacing:.04em;color:#f3dcc0;
+    padding:6px clamp(16px,5vw,30px);border:2px solid #1d0402;border-radius:5px;
+    background:var(--brushed),linear-gradient(180deg,#8a2a1f,#5b1610 60%,#4a110c);
+    box-shadow:inset 0 1px 0 rgba(255,220,200,.35),0 0 0 1px #9b4a3a,0 6px 14px rgba(0,0,0,.6);text-shadow:0 1px 0 #000}
+  .cta:active{transform:translateY(2px)}
+
+  /* ---------- bande acier ---------- */
+  .steel{padding:7px 0;white-space:nowrap;overflow:hidden;border-block:2px solid #000;
+    background:var(--brushed),linear-gradient(180deg,#d2d0cb,#9a9893 45%,#7c7a75 55%,#b4b2ad);box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
+  .steel-in{display:flex;width:max-content;animation:defile 28s linear infinite}
+  .steel:hover .steel-in{animation-play-state:paused}
+  .steel span{font-weight:600;font-size:clamp(13px,3.6vw,22px);letter-spacing:.04em;text-transform:uppercase;color:#1b1b1b;text-shadow:0 1px 0 rgba(255,255,255,.45);padding-right:.5em}
+  .steel b{color:#9e1c12;font-weight:600;padding:0 .35em}
   @keyframes defile{to{transform:translateX(-50%)}}
 
-  /* ---------- titre ---------- */
-  header{text-align:center;padding:38px 0 8px}
-  .kicker{display:flex;align-items:center;justify-content:center;gap:14px;font-weight:500;font-size:clamp(14px,3.6vw,18px);letter-spacing:.45em;text-transform:uppercase;color:var(--muted)}
-  .kicker::before,.kicker::after{content:"";height:2px;width:clamp(30px,10vw,90px);background:linear-gradient(90deg,transparent,#7d746a)}
-  .kicker::after{transform:scaleX(-1)}
-  h1{margin-top:10px;line-height:.92}
-  h1 .metal{display:block;font-size:clamp(50px,14.5vw,124px);letter-spacing:.01em}
-  .by{display:inline-flex;align-items:center;gap:12px;margin-top:16px;font-weight:700;font-size:clamp(18px,4.8vw,26px);letter-spacing:.22em;text-transform:uppercase;color:var(--cream)}
-  .by i{font-style:normal;color:var(--muted);font-weight:400}
-  .by span{background:var(--red);color:#fff;padding:2px 12px 1px;letter-spacing:.14em;box-shadow:0 3px 0 #5c0a0f}
+  /* ---------- garage à jeux ---------- */
+  .garage{padding:clamp(20px,5vw,36px) clamp(10px,3vw,24px) clamp(22px,5vw,36px);text-align:center;background:var(--noise),linear-gradient(180deg,#1a1a1a,#141414)}
+  .garage h2{font-weight:700;font-size:clamp(24px,6.6vw,46px);text-transform:uppercase;line-height:1;color:var(--cream);letter-spacing:.01em;text-shadow:0 2px 0 #000,0 4px 10px rgba(0,0,0,.7)}
+  .garage .sub{margin-top:4px;font-weight:500;font-size:clamp(11px,2.9vw,18px);text-transform:uppercase;letter-spacing:.03em;color:#e6dac5}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(6px,2vw,16px);margin-top:clamp(14px,3.6vw,26px);text-align:center}
+  .card{display:flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;padding:clamp(4px,1.2vw,8px) clamp(4px,1.2vw,8px) clamp(8px,2vw,14px);
+    /* cadre « cuivre rouillé » */
+    border:3px solid transparent;border-radius:6px;
+    background:var(--brushed) padding-box,linear-gradient(180deg,#3a3a3a,#232323 40%,#1d1d1d) padding-box,
+      linear-gradient(160deg,#e0a066,#9c4a1c 30%,#5a260d 55%,#b8662c 80%,#6e3415) border-box;
+    box-shadow:inset 0 0 0 1px #2a1208,inset 0 0 0 2px rgba(242,177,52,.35),0 0 18px rgba(196,90,30,.18),0 8px 18px rgba(0,0,0,.6);transition:transform .15s}
+  a.card:hover{transform:translateY(-3px)}
+  .thumbwrap{position:relative;width:100%;margin-bottom:clamp(10px,2.4vw,16px)}
+  .thumb{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border:2px solid #000;border-radius:3px;background:#0d0d0d;box-shadow:0 0 0 1px #4a4a4a}
+  .thumb.moto{display:grid;place-items:center;overflow:hidden;
+    background:linear-gradient(180deg,transparent 78%,rgba(0,0,0,.55) 78%),radial-gradient(80% 90% at 50% 25%,#3c3a37,#121110 75%)}
+  .thumb.moto img{width:86%;height:auto;margin-top:2%;filter:drop-shadow(0 6px 6px rgba(0,0,0,.8)) saturate(.85)}
+  .badge{position:absolute;left:50%;bottom:0;transform:translate(-50%,50%);white-space:nowrap;font-weight:600;font-size:clamp(7px,2vw,12px);letter-spacing:.06em;text-transform:uppercase;color:#e9dcc6;
+    padding:2px 8px;border:1px solid #000;border-radius:3px;background:linear-gradient(180deg,#3d3d3d,#1f1f1f);box-shadow:inset 0 1px 0 rgba(255,255,255,.15)}
+  .card h3{font-weight:600;font-size:clamp(12px,3.5vw,24px);text-transform:uppercase;line-height:1.05;color:var(--cream);text-shadow:0 2px 0 #000}
+  .card p{margin-top:4px;font-size:clamp(9px,2.3vw,14px);color:#c9bda9;line-height:1.25}
+  .card .spacer{flex:1}
+  .meter{display:flex;align-items:center;justify-content:center;gap:clamp(4px,1.2vw,8px);margin-top:clamp(6px,1.6vw,10px);padding:clamp(3px,.8vw,5px) clamp(4px,1vw,7px);
+    border:1px solid #000;border-radius:4px;background:linear-gradient(180deg,#4a4a4a,#262626);box-shadow:inset 0 1px 0 rgba(255,255,255,.15)}
+  .meter small{font-weight:500;font-size:clamp(7px,1.9vw,12px);line-height:1;text-transform:uppercase;text-align:left;color:#e2d6c1}
+  .digits{display:flex;gap:2px}
+  .digits b{display:grid;place-items:center;width:clamp(12px,3.6vw,24px);height:clamp(17px,5vw,32px);font-weight:700;font-size:clamp(11px,3.4vw,22px);color:#141414;border-radius:2px;
+    background:linear-gradient(180deg,#a9a59e 0%,#ebe7df 30%,#f4f1ea 50%,#cfcac1 52%,#e9e5dd 80%,#9d9992 100%);box-shadow:inset 0 0 0 1px #000}
+  .digits b:last-child{color:#c21d14}
+  .play{margin-top:clamp(6px,1.6vw,10px);font-weight:600;font-size:clamp(8px,2.3vw,14px);text-transform:uppercase;letter-spacing:.03em;color:#f0d9be;white-space:nowrap;
+    padding:3px clamp(6px,1.8vw,14px);border:1px solid #1d0402;border-radius:3px;background:linear-gradient(180deg,#8a2a1f,#4f130d);box-shadow:inset 0 1px 0 rgba(255,220,200,.3)}
+  .card.soon{opacity:.6}
+  .card.soon .thumb.moto img{filter:drop-shadow(0 6px 6px rgba(0,0,0,.8)) grayscale(.6)}
+  .card.soon h3{margin-top:clamp(2px,1vw,6px)}
 
-  /* ---------- étiquettes estampées ---------- */
-  .tags{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:30px}
-  .tag{
-    font-weight:500;font-size:14px;letter-spacing:.18em;text-transform:uppercase;color:#d9cdb8;
-    padding:9px 18px 8px;border:1px solid #000;border-radius:3px;
-    background:var(--noise),linear-gradient(180deg,#3d3833,#26221f);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 3px 8px rgba(0,0,0,.5);
-    text-shadow:0 -1px 0 #000;
-  }
-  .tag::before{content:"■";color:var(--red);font-size:9px;vertical-align:2px;margin-right:9px}
+  /* ---------- citation ---------- */
+  .quote{padding:clamp(10px,2.4vw,16px) 10px;text-align:center;border-block:2px solid #000;
+    background:var(--brushed),linear-gradient(180deg,#3d3d3d,#262626 50%,#323232);box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+  .quote p{font-weight:600;font-size:clamp(13px,3.8vw,26px);text-transform:uppercase;color:#efe3cd;letter-spacing:.02em;text-shadow:0 2px 0 #000}
 
-  /* ---------- enseigne peinte ---------- */
-  .letsgo{
-    display:inline-block;margin-top:32px;padding:10px 26px 8px;transform:rotate(-2deg);
-    font-family:"Alfa Slab One",Georgia,serif;font-size:clamp(20px,5.6vw,30px);letter-spacing:.04em;text-transform:uppercase;color:#f6efe2;
-    background:var(--rustspots) 0 0/260px 130px,linear-gradient(180deg,#c21d25,#8f1118);
-    border:1px solid #000;border-radius:3px;
-    box-shadow:inset 0 0 0 3px rgba(255,255,255,.12),0 8px 20px rgba(0,0,0,.6);
-    text-shadow:0 2px 0 #4a070b;
-  }
+  /* ---------- pied de page ---------- */
+  footer{display:flex;align-items:center;gap:clamp(12px,4vw,30px);padding:clamp(12px,3vw,20px) clamp(12px,4vw,30px) clamp(16px,4vw,26px);background:var(--noise),#121212}
+  .visits{display:flex;flex-direction:column;align-items:center;gap:4px;flex:0 0 auto}
+  .visits .digits{padding:4px 6px;border:1px solid #000;border-radius:5px;background:linear-gradient(180deg,#c9c6bf,#7d7a74 50%,#a7a49e);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 4px 10px rgba(0,0,0,.6)}
+  .visits .digits b{width:clamp(16px,4.6vw,28px);height:clamp(22px,6.4vw,38px);font-size:clamp(15px,4.4vw,26px)}
+  .visits small{font-weight:600;font-size:clamp(9px,2.4vw,14px);text-transform:uppercase;letter-spacing:.04em;color:#e6dac5}
+  .sign{text-align:center;flex:1}
+  .sign strong{display:block;font-weight:600;font-size:clamp(13px,3.6vw,22px);text-transform:uppercase;color:#e2d4bb;letter-spacing:.02em}
+  .sign span{font-size:clamp(9px,2.2vw,13px);color:#8f8575}
 
-  /* ---------- séparateur ---------- */
-  .section{display:flex;align-items:center;gap:16px;margin:56px 0 24px}
-  .section::before,.section::after{content:"";flex:1;height:14px;
-    background:repeating-linear-gradient(180deg,var(--red) 0 2px,transparent 2px 4px,#e9dfcc 4px 6px,transparent 6px 8px);opacity:.75}
-  .section h2{font-size:clamp(30px,8vw,46px);letter-spacing:.04em;white-space:nowrap}
-
-  /* ---------- cartes de jeux ---------- */
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:22px}
-  .card{display:flex;flex-direction:column;text-decoration:none;color:inherit;padding:16px;transition:transform .15s ease}
-  .card:hover{transform:translateY(-4px)}
-  .thumb{
-    position:relative;aspect-ratio:16/10;display:grid;place-items:center;text-align:center;padding:16px;border-radius:3px;overflow:hidden;
-    background:var(--noise),radial-gradient(80% 90% at 50% 110%,rgba(156,70,26,.55),transparent 70%),linear-gradient(180deg,#141110,#221c18);
-    border:1px solid #000;box-shadow:inset 0 0 40px rgba(0,0,0,.8);
-  }
-  .thumb .metal{font-size:clamp(26px,7vw,34px);line-height:1}
-  .thumb .num{position:absolute;top:10px;left:12px;font-weight:500;font-size:12px;letter-spacing:.3em;color:#7d746a}
-  .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-  .body{padding:16px 2px 2px;display:flex;flex-direction:column;gap:8px;flex:1}
-  .body h3{font-family:"Alfa Slab One",Georgia,serif;font-weight:400;font-size:22px;line-height:1.1;color:var(--cream);text-transform:uppercase;text-shadow:0 2px 0 #000}
-  .body p{color:#cbbda6;font-size:15px;flex:1}
-  .plays{font-weight:500;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);min-height:1em}
-  .play{
-    align-self:stretch;text-align:center;margin-top:8px;
-    font-weight:700;font-size:20px;letter-spacing:.3em;text-transform:uppercase;color:#fff;
-    background:linear-gradient(180deg,#c9202a,#93111a);border:1px solid #000;border-radius:3px;padding:10px 16px 9px;
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.3),inset 0 -2px 0 rgba(0,0,0,.25),0 4px 0 #3d0609;text-shadow:0 -1px 0 #4a070b;
-  }
-  .card:active .play{transform:translateY(3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 1px 0 #3d0609}
-  .empty{padding:40px 20px;text-align:center;color:var(--cream)}
-  .empty strong{display:block;font-family:"Alfa Slab One",Georgia,serif;font-weight:400;font-size:22px;margin-bottom:6px;text-transform:uppercase}
-
-  /* ---------- pied de page : tôle larmée ---------- */
-  footer{
-    margin-top:64px;padding:30px 16px 34px;text-align:center;border-top:1px solid #000;
-    background:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30'%3E%3Cg stroke='%23171513' stroke-width='1'%3E%3Crect x='3' y='5.5' width='13' height='4' rx='2' fill='%23b0aaa1' transform='rotate(45 9.5 7.5)'/%3E%3Crect x='14' y='20.5' width='13' height='4' rx='2' fill='%23b0aaa1' transform='rotate(-45 20.5 22.5)'/%3E%3C/g%3E%3C/svg%3E") 0 0/30px 30px,
-      var(--noise),
-      linear-gradient(180deg,#5d5852,#3a3632);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.15),inset 0 14px 24px rgba(0,0,0,.55);
-  }
-  .counter{display:inline-flex;flex-direction:column;align-items:center;gap:8px;padding:14px 22px 12px;margin-bottom:18px}
-  .counter:empty{display:none}
-  .digits{display:flex;gap:4px}
-  .digits b{
-    display:grid;place-items:center;width:30px;height:42px;font-weight:700;font-size:28px;color:#f3ead8;border-radius:3px;
-    background:linear-gradient(180deg,#0b0908 0%,#2a2521 48%,#0b0908 52%,#1f1b18 100%);
-    box-shadow:inset 0 0 0 1px #000,inset 0 2px 4px rgba(0,0,0,.8);
-  }
-  .counter small{font-weight:500;font-size:12px;letter-spacing:.4em;text-transform:uppercase;color:#d9cdb8;text-shadow:0 -1px 0 #000}
-  .copy{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#d6cbb9;text-shadow:0 1px 2px #000}
-
-  @media (prefers-reduced-motion:reduce){ .ticker-in{animation:none} }
+  @media (prefers-reduced-motion:reduce){.spark,.steel-in{animation:none}}
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="plate banner-frame">
-      <img class="banner" src="banniere.jpg" width="1600" height="595" alt="Johnny PMU">
-    </div>
+<div class="page">
 
-    <div class="ticker" aria-hidden="true"><div class="ticker-in">
-      <span>Beer<b>★</b>BBQ<b>★</b>Freedom<b>★</b>Rock'n'roll<b>★</b>Bad decisions<b>★</b>Pastis<b>★</b>Good times<b>★</b>PMU 4 life<b>★</b></span>
-      <span>Beer<b>★</b>BBQ<b>★</b>Freedom<b>★</b>Rock'n'roll<b>★</b>Bad decisions<b>★</b>Pastis<b>★</b>Good times<b>★</b>PMU 4 life<b>★</b></span>
-    </div></div>
-
-    <header>
-      <div class="kicker">Les petits jeux</div>
-      <h1><span class="metal">What the fuck</span></h1>
-      <div class="by"><i>de</i><span>Johnny PMU</span></div>
-      <div class="tags">
-        <span class="tag">Joue depuis ton téléphone</span>
-        <span class="tag">Pas d'inscription</span>
-        <span class="tag">Tu cliques, tu joues</span>
-      </div>
-      <p class="letsgo">Let's go ma poule !</p>
-    </header>
-
-    <div class="section"><h2 class="metal">Les jeux</h2></div>
-    <main id="games" class="grid"></main>
+  <div class="topbar">
+    <span>Johnny PMU · Official playground</span>
+    <div class="miniflag" aria-hidden="true"><i></i><i></i><i></i></div>
+    <span>Rock'n'roll · Beer · Bad decisions</span>
   </div>
 
+  <div class="banner-wrap">
+    <img class="banner" src="banniere.jpg" width="1600" height="595" alt="Johnny PMU">
+  </div>
+
+  <section class="hero" id="hero">
+    <svg class="fire" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <radialGradient id="fl" cx="50%" cy="72%" r="55%">
+          <stop offset="0" stop-color="#fff2a8"/><stop offset=".18" stop-color="#ffb02e"/><stop offset=".42" stop-color="#f05a12"/><stop offset=".7" stop-color="#8f1d06" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="burn" x="-20%" y="-40%" width="140%" height="160%">
+          <feTurbulence type="fractalNoise" baseFrequency=".012 .045" numOctaves="3" seed="4">
+            <animate attributeName="seed" values="1;2;3;4;5;6;7;8" dur="1.6s" repeatCount="indefinite"/>
+          </feTurbulence>
+          <feDisplacementMap in="SourceGraphic" scale="70" xChannelSelector="R" yChannelSelector="G"/>
+          <feGaussianBlur stdDeviation="2"/>
+        </filter>
+      </defs>
+      <g filter="url(#burn)" opacity=".95">
+        <ellipse cx="10" cy="400" rx="190" ry="330" fill="url(#fl)"/>
+        <ellipse cx="150" cy="420" rx="160" ry="200" fill="url(#fl)"/>
+        <ellipse cx="270" cy="430" rx="120" ry="110" fill="url(#fl)" opacity=".8"/>
+        <ellipse cx="990" cy="400" rx="190" ry="330" fill="url(#fl)"/>
+        <ellipse cx="850" cy="420" rx="160" ry="200" fill="url(#fl)"/>
+        <ellipse cx="730" cy="430" rx="120" ry="110" fill="url(#fl)" opacity=".8"/>
+        <ellipse cx="500" cy="440" rx="320" ry="70" fill="url(#fl)" opacity=".45"/>
+      </g>
+    </svg>
+    <p class="presente">Présente</p>
+    <h1 class="wtf">What the fuck games</h1>
+    <p class="subtitle">Les petits jeux Johnny PMU</p>
+    <p class="tagline">Des mini-jeux absurdes, du rock'n'roll et des décisions qu'on assume rarement le lendemain.</p>
+    <div class="pills"><span>Sans inscription</span><span>Direct sur mobile</span><span>Fait maison</span></div>
+    <a class="cta" href="#jeux">Entrer dans le saloon</a>
+  </section>
+
+  <div class="steel" aria-label="Beer, BBQ, Freedom, Rock'n'roll, Bad decisions, PMU 4 life"><div class="steel-in" aria-hidden="true">
+    <span>Beer <b>★</b> BBQ <b>★</b> Freedom <b>★</b> Rock'n'roll <b>★</b> Bad decisions <b>★</b> PMU 4 life <b>★</b> Beer <b>★</b> BBQ <b>★</b> Freedom <b>★</b> Rock'n'roll <b>★</b> Bad decisions <b>★</b> PMU 4 life <b>★</b></span>
+    <span>Beer <b>★</b> BBQ <b>★</b> Freedom <b>★</b> Rock'n'roll <b>★</b> Bad decisions <b>★</b> PMU 4 life <b>★</b> Beer <b>★</b> BBQ <b>★</b> Freedom <b>★</b> Rock'n'roll <b>★</b> Bad decisions <b>★</b> PMU 4 life <b>★</b></span>
+  </div></div>
+
+  <section class="garage" id="jeux">
+    <h2>Le garage à jeux</h2>
+    <p class="sub">Choisis ton jeu, assume les conséquences.</p>
+    <div id="games" class="grid"></div>
+  </section>
+
+  <div class="quote"><p>“ Ici, on ne juge pas. On compte les dégâts. ”</p></div>
+
   <footer>
-    <div id="visits" class="plate counter"></div>
-    <div class="copy">© <span id="y"></span> Johnny PMU — Jeux faits maison, humour garanti</div>
+    <div class="visits"><div class="digits" id="visits"><b>0</b><b>0</b><b>0</b><b>0</b><b>0</b></div><small>Visites du saloon</small></div>
+    <div class="sign"><strong>Johnny PMU · Rock'n'roll software</strong><span>© <span id="y"></span> Johnny PMU</span></div>
   </footer>
+</div>
 
 <script>
   /* ============================================================
      LISTE DES JEUX
      Pour ajouter un jeu : mettre son dossier dans le dépôt
      (ex. ricard-parfait/index.html) puis ajouter une ligne ici.
-     (emoji : plus affiché, gardé pour info)
+     image : vignette 16:10 (ex. "ricard-parfait/vignette.jpg")
+     Les cases « Prochainement » complètent la grille automatiquement.
      ============================================================ */
   const GAMES = [
-    { titre: "Le Ricard Parfait", dossier: "ricard-parfait", emoji: "🥃", description: "Sers un jaune à Johnny : dose parfaite ou catastrophe au comptoir ?" },
+    { titre: "Le Ricard Parfait", dossier: "ricard-parfait", emoji: "🥃", image: "ricard-parfait/vignette.jpg",
+      description: "Sers un jaune à Johnny : dose parfaite ou catastrophe au comptoir ?" },
   ];
 
-  const el = document.getElementById("games");
-  if (!GAMES.length) {
-    el.outerHTML = '<div class="plate empty"><strong>Les premiers jeux arrivent bientôt</strong>Repasse dans pas longtemps.</div>';
-  } else {
-    el.innerHTML = GAMES.map((g, i) => `
-      <a class="card plate" href="${g.dossier}/">
-        <div class="thumb">
-          <span class="num">N°${String(i + 1).padStart(2, "0")}</span>
-          ${g.image ? `<img src="${g.image}" alt="">` : `<span class="metal">${g.titre}</span>`}
+  const digits = (n, len) => String(Math.max(0, n | 0)).padStart(len, "0").split("").map(d => `<b>${d}</b>`).join("");
+  const MOTO = `<div class="thumb moto" aria-hidden="true"><img src="solex.webp" alt="" loading="lazy"></div>`;
+
+  const cards = GAMES.map((g, i) => `
+      <a class="card" href="${g.dossier}/">
+        <div class="thumbwrap">
+          ${g.image ? `<img class="thumb" src="${g.image}" alt="${g.titre}" loading="lazy">` : MOTO}
+          <span class="badge">Game Nº${String(i + 1).padStart(2, "0")}</span>
         </div>
-        <div class="body">
-          <h3>${g.titre}</h3>
-          <p>${g.description || ""}</p>
-          <span class="plays" data-jeu="${g.dossier}"></span>
-          <span class="play">Jouer</span>
-        </div>
-      </a>`).join("");
+        <h3>${g.titre}</h3>
+        <p>${g.description || ""}</p>
+        <div class="spacer"></div>
+        <div class="meter"><div class="digits" data-jeu="${g.dossier}">${digits(0, 4)}</div><small>Parties<br>jouées</small></div>
+        <span class="play">▶ Jouer maintenant</span>
+      </a>`);
+  const total = Math.max(3, Math.ceil(cards.length / 3) * 3);
+  for (let i = cards.length; i < total; i++) {
+    cards.push(`
+      <div class="card soon">
+        <div class="thumbwrap">${MOTO}</div>
+        <h3>Prochainement</h3>
+        <div class="spacer"></div>
+        <div class="meter"><div class="digits">${digits(0, 4)}</div><small>Parties<br>jouées</small></div>
+      </div>`);
   }
+  document.getElementById("games").innerHTML = cards.join("");
   document.getElementById("y").textContent = new Date().getFullYear();
+
+  /* ---------- étincelles ---------- */
+  (function () {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const hero = document.getElementById("hero");
+    for (let i = 0; i < 34; i++) {
+      const s = document.createElement("span");
+      s.className = "spark";
+      const side = Math.random() < .5 ? Math.random() * 28 : 72 + Math.random() * 28;
+      s.style.left = side + "%";
+      s.style.top = (30 + Math.random() * 65) + "%";
+      const z = 1 + Math.random() * 2.5; s.style.width = s.style.height = z + "px";
+      s.style.animationDuration = (.6 + Math.random() * 1.6) + "s";
+      s.style.animationDelay = (-Math.random() * 2) + "s";
+      hero.appendChild(s);
+    }
+  })();
 
   /* ============================================================
      COMPTEURS (service gratuit Abacus, sans compte)
@@ -239,7 +260,6 @@
   /* Coup de pouce au démarrage : ajouté au vrai chiffre à l'affichage.
      (Les vrais chiffres restent dans Abacus : /get/johnnypmu/visites, etc.) */
   const BONUS = { visites: 121, "ricard-parfait": 124 };
-  const fmt = n => Number(n).toLocaleString("fr-FR");
   const getVal = url => fetch(url).then(r => r.ok ? r.json() : null).then(d => d && d.value).catch(() => null);
 
   let dejaCompte = false;
@@ -247,15 +267,12 @@
   getVal(`${API}/${dejaCompte ? "get" : "hit"}/johnnypmu/visites`).then(v => {
     if (v == null) return;
     try { sessionStorage.setItem("visiteComptee", "1"); } catch (e) {}
-    v += BONUS.visites || 0;
-    const digits = String(v).padStart(5, "0").split("").map(d => `<b>${d}</b>`).join("");
-    document.getElementById("visits").innerHTML = `<div class="digits">${digits}</div><small>Visite${v > 1 ? "s" : ""}</small>`;
+    document.getElementById("visits").innerHTML = digits(v + (BONUS.visites || 0), 5);
   });
 
-  document.querySelectorAll(".plays[data-jeu]").forEach(el => {
+  document.querySelectorAll(".digits[data-jeu]").forEach(el => {
     getVal(`${API}/get/johnnypmu/parties-${el.dataset.jeu}`).then(v => {
-      v = (v || 0) + (BONUS[el.dataset.jeu] || 0);
-      el.textContent = `${fmt(v)} partie${v > 1 ? "s" : ""} jouée${v > 1 ? "s" : ""}`;
+      el.innerHTML = digits((v || 0) + (BONUS[el.dataset.jeu] || 0), 4);
     });
   });
 </script>
