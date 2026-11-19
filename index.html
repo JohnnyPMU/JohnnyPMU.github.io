@@ -320,7 +320,11 @@
   /* Coup de pouce au démarrage : ajouté au vrai chiffre à l'affichage.
      (Les vrais chiffres restent dans Abacus : /get/johnnypmu/visites, etc.) */
   const BONUS = { visites: 121, "ricard-parfait": 124 };
-  const getVal = url => fetch(url).then(r => r.ok ? r.json() : null).then(d => d && d.value).catch(() => null);
+  /* Abacus est parfois instable : en cas d'erreur, on redemande jusqu'à 2 fois (3 s puis 6 s plus tard). */
+  const getVal = (url, essais = 2, attente = 3000) =>
+    fetch(url).then(r => r.ok ? r.json() : null).then(d => (d && typeof d.value === "number") ? d.value : null).catch(() => null)
+      .then(v => (v != null || essais <= 0) ? v
+        : new Promise(res => setTimeout(res, attente)).then(() => getVal(url, essais - 1, attente * 2)));
 
   /* Le service peut être lent : on affiche tout de suite le dernier chiffre connu
      (mémorisé dans le navigateur du visiteur), sinon des tirets, puis on met à jour. */
