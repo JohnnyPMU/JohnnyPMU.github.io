@@ -111,12 +111,37 @@ function proutSample(){
     return true;
   }catch(e){return false;}
 }
+/* ---------- voix de Johnny ----------
+   voix-prout.mp3 : 3 répliques, jouées de temps en temps à la place d'un prout
+   voix-superprout.mp3 : 1 réplique, jouée au début du turbo Tabasco */
+const VOIX_SEG=[[0.43,1.47],[3.73,1.59],[7.44,1.61]];
+const VOIX_SUPER=[0.55,2.65];
+const VOIX_CHANCE=0.14,VOIX_PAUSE=6;          // ~1 appui sur 7, au moins 6 s entre deux voix
+let VOIX_BUF=null,SUPER_BUF=null,derniereVoix=-1,voixT=-99;
+function jouerExtrait(buf,deb,dur,vol){
+  const t0=AC.currentTime,s=AC.createBufferSource(),g=AC.createGain();s.buffer=buf;
+  g.gain.setValueAtTime(vol,t0);g.gain.setValueAtTime(vol,t0+dur-0.08);g.gain.linearRampToValueAtTime(0.0001,t0+dur);
+  s.connect(g).connect(SFX);s.start(t0,deb,dur+0.02);
+}
+function voixPeutEtre(){
+  if(!AC||!VOIX_BUF||t-voixT<VOIX_PAUSE||Math.random()>VOIX_CHANCE)return false;
+  try{
+    let i=Math.floor(Math.random()*VOIX_SEG.length);if(i===derniereVoix)i=(i+1)%VOIX_SEG.length;derniereVoix=i;
+    jouerExtrait(VOIX_BUF,VOIX_SEG[i][0],VOIX_SEG[i][1],0.85);voixT=t;return true;
+  }catch(e){return false;}
+}
+function voixSuper(){
+  if(!AC||!SUPER_BUF)return;
+  try{jouerExtrait(SUPER_BUF,VOIX_SUPER[0],VOIX_SUPER[1],0.9);voixT=t;}catch(e){}
+}
 /* ---------- son du turbo Tabasco (sample turbo.mp3, joué pendant tout le boost) ---------- */
 let TURBO_BUF=null,turboSrc=null,turboGain=null;
 function chargerTurbo(){
   if(!AC)return;
   if(!TURBO_BUF)chargerSon('turbo.mp3').then(buf=>{TURBO_BUF=buf;if(G.boost>0)turboStart();}).catch(()=>{});
   if(!PROUTS_BUF)chargerSon('prouts.mp3').then(buf=>{PROUTS_BUF=buf;}).catch(()=>{});
+  if(!VOIX_BUF)chargerSon('voix-prout.mp3').then(buf=>{VOIX_BUF=buf;}).catch(()=>{});
+  if(!SUPER_BUF)chargerSon('voix-superprout.mp3').then(buf=>{SUPER_BUF=buf;}).catch(()=>{});
 }
 function turboStart(){
   if(!AC||!TURBO_BUF||turboSrc)return;              // déjà en cours : on ne redémarre pas
@@ -162,11 +187,11 @@ function initAudio(){
 })();
 
 const SON={
-  pet(){if(G.boost>0)return;if(!proutSample())prout(true);},   // chaque battement / pet (silence pendant le turbo : c'est turbo.mp3 qui joue)
+  pet(){if(G.boost>0)return;if(voixPeutEtre())return;if(!proutSample())prout(true);},   // chaque battement / pet (silence pendant le turbo : c'est turbo.mp3 qui joue)
   petVide(){prout(false);},  // pet raté (plus de gaz) : petit « pfft »
   miam(){},       // fayots ramassés
   merguez(){},    // merguez ramassée
-  tabasco(){turboStart();},    // début du turbo Tabasco : sample turbo.mp3 jusqu'à la fin du boost
+  tabasco(){turboStart();voixSuper();},    // début du turbo Tabasco : sample turbo.mp3 jusqu'à la fin du boost
   feu(){},        // obstacle cramé pendant le turbo
   aie(){},        // Johnny se cogne
   crash(){},      // fin de partie
