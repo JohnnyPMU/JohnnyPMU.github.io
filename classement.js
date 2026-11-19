@@ -101,9 +101,15 @@
   function fmt(n) { return Number(n).toLocaleString("fr-FR"); }
 
   /* ---------- fenêtre ---------- */
-  var fond = null;
-  function fermer() { if (fond) { fond.remove(); fond = null; } }
-  function creer(theme) {
+  var fond = null, surFermeture = null;
+  function fermer() {
+    if (fond) { fond.remove(); fond = null; }
+    var cb = surFermeture; surFermeture = null;
+    if (cb) { try { cb(); } catch (e) {} }
+  }
+  /* fermableParFond : toucher à côté de la fenêtre la ferme (accueil seulement,
+     pas en fin de partie où les joueurs tapotent l'écran) */
+  function creer(theme, fermableParFond) {
     fermer();
     fond = document.createElement("div");
     fond.className = "jc-fond jc-" + theme;
@@ -113,7 +119,7 @@
     ["pointerdown", "pointerup", "mousedown", "mouseup", "touchstart", "touchend", "keydown", "keyup", "click"].forEach(function (t) {
       fond.addEventListener(t, function (e) { e.stopPropagation(); });
     });
-    fond.addEventListener("click", function (e) { if (e.target === fond) fermer(); });
+    if (fermableParFond) fond.addEventListener("click", function (e) { if (e.target === fond) fermer(); });
     var boite = document.createElement("div");
     boite.className = "jc-boite";
     fond.appendChild(boite);
@@ -153,7 +159,8 @@
   /* Accueil : affiche simplement le top 10 */
   function ouvrir(jeu, opts) {
     opts = opts || {};
-    var boite = creer(opts.theme || "site");
+    var boite = creer(opts.theme || "site", true);
+    surFermeture = opts.surFermeture || null;
     boite.appendChild(el("h2", "", "Top 10"));
     boite.appendChild(el("p", "jc-sous", opts.titre || ""));
     var att = el("p", "jc-sous", "Chargement…");
@@ -166,7 +173,8 @@
   function finDePartie(jeu, score, opts) {
     opts = opts || {};
     score = Math.max(0, Math.floor(Number(score) || 0));
-    var boite = creer(opts.theme || "jeu");
+    var boite = creer(opts.theme || "jeu", false);
+    surFermeture = opts.surFermeture || null;            // appelé quand le joueur ferme la fenêtre
     var titre = el("h2", "", "Top 10");
     boite.appendChild(titre);
     var att = el("p", "jc-sous", "Chargement…");

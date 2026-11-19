@@ -552,7 +552,7 @@ function drawOver(c){
   txt(c,'VERRES SERVIS : '+G.served,270,574,27,INK,{lw:0});
   txt(c,'RECORD : '+G.best,270,612,27,'#1e4fd8',{lw:0});
   if(G.newBest&&Math.sin(t*10)>-0.3)txt(c,'NOUVEAU RECORD !',270,694,42,'#ff3df0',{rot:-0.06,lw:9});
-  button(c,'REMETS-MOI ÇA !',800,'#ff4b2b',G.st>1);
+  button(c,'REMETS-MOI ÇA !',800,'#ff4b2b',G.st>1&&!G.topEnAttente);
   c.restore();
 }
 function drawCamZone(c){
@@ -599,14 +599,19 @@ function endGame(){
   if(G.score>G.best){G.best=G.score;G.newBest=true;try{localStorage.setItem('ricardParfait.best',String(G.best));}catch(e){}}
   say('end','angry',3);
   if(window.JohnnyPMU)JohnnyPMU.finDePartie();
+  // Top 10 : on bloque « Remets-moi ça » tant que la fenêtre n'a pas été fermée
   const scoreFinal=G.score;
-  if(window.JohnnyClassement)setTimeout(()=>{if(G.state==='over')JohnnyClassement.finDePartie('ricard-parfait',scoreFinal);},1400);
+  G.topEnAttente=!!window.JohnnyClassement;
+  if(G.topEnAttente)setTimeout(()=>{
+    try{JohnnyClassement.finDePartie('ricard-parfait',scoreFinal,{surFermeture:()=>{G.topEnAttente=false;G.st=Math.min(G.st,0.6);}});}
+    catch(e){G.topEnAttente=false;}
+  },800);
 }
 function press(){
   initAudio();if(AC&&AC.state==='suspended')AC.resume().catch(()=>{});
   if(!musicStarted)startMusic();
   if(G.state==='title'){newGame();return;}
-  if(G.state==='over'){if(G.st>1)newGame();return;}
+  if(G.state==='over'){if(G.st>1&&!G.topEnAttente)newGame();return;}
   if(G.state==='ready'){G.state='pouring';G.holding=true;}
 }
 function release(){G.holding=false;if(G.state==='pouring')G.state='settle';}
