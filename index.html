@@ -132,6 +132,36 @@
   .sign strong{display:block;font-weight:600;font-size:clamp(13px,3.6vw,22px);text-transform:uppercase;color:#e2d4bb;letter-spacing:.02em}
   .sign span{font-size:clamp(9px,2.2vw,13px);color:#8f8575}
 
+  /* ---------- ergonomie ---------- */
+  a:focus-visible{outline:3px solid #f2c94c;outline-offset:3px}
+  @media (max-width:600px){
+    /* barre du haut : une seule ligne lisible */
+    .topbar{justify-content:center}
+    .topbar .miniflag,.topbar span:last-child{display:none}
+    .topbar span{font-size:12px}
+    /* textes du haut un peu plus grands */
+    .tagline{font-size:14px}
+    .pills span{font-size:12px;padding:5px 10px}
+    .cta{padding:12px 14px;font-size:clamp(13px,4.1vw,17px);letter-spacing:.02em}
+    .garage .sub{font-size:13px}
+    /* jeux jouables : une grande carte pleine largeur */
+    .grid{grid-template-columns:1fr 1fr;gap:12px}
+    .card:not(.soon){grid-column:1/-1;padding:8px 8px 14px}
+    .card:not(.soon) .badge{font-size:12px;padding:3px 10px}
+    .card:not(.soon) h3{font-size:24px}
+    .card:not(.soon) p{font-size:15px;margin-top:6px}
+    .card:not(.soon) .meter{gap:8px;padding:5px 8px}
+    .card:not(.soon) .meter small{font-size:12px}
+    .card:not(.soon) .digits b{width:24px;height:32px;font-size:22px}
+    .card:not(.soon) .play{align-self:stretch;font-size:18px;padding:12px;margin-top:12px;border-radius:5px}
+    /* « prochainement » : 2 petites cartes côte à côte */
+    .card.soon{padding:6px 6px 12px}
+    .card.soon h3{font-size:16px}
+    .card.soon .meter small{font-size:9px}
+    .card.soon .digits b{width:17px;height:24px;font-size:16px}
+    .quote p{font-size:15px}
+  }
+
   @media (prefers-reduced-motion:reduce){.spark,.steel-in{animation:none}}
 </style>
 </head>

@@ -55,6 +55,42 @@ function initAudio(){
     src.connect(pourFilter).connect(pourGain).connect(AC.destination);src.start();
   }catch(e){AC=null;}
 }
+/* ---------- musique de fond (démarre au 1er appui, en boucle) ---------- */
+const MUSIC=new Audio('musique.mp3');MUSIC.loop=true;MUSIC.preload='none';
+const MUSIC_VOL=0.35;
+let musicOn=true,musicStarted=false,musicLinked=false;
+try{musicOn=localStorage.getItem('ricardParfait.musique')!=='off';}catch(e){}
+function linkMusic(){
+  if(musicLinked||!AC)return;
+  try{const s=AC.createMediaElementSource(MUSIC),g=AC.createGain();g.gain.value=MUSIC_VOL;s.connect(g).connect(AC.destination);musicLinked=true;}
+  catch(e){MUSIC.volume=MUSIC_VOL;}
+}
+function startMusic(){
+  if(!musicOn)return;
+  linkMusic();if(!musicLinked)MUSIC.volume=MUSIC_VOL;
+  MUSIC.play().then(()=>{musicStarted=true;}).catch(()=>{});
+}
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden)MUSIC.pause();else if(musicOn&&musicStarted)MUSIC.play().catch(()=>{});
+});
+(function(){
+  const b=document.createElement('button');b.id='btnMusique';b.type='button';
+  const st=document.createElement('style');
+  st.textContent='#btnMusique{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));right:10px;z-index:50;width:46px;height:46px;border-radius:50%;'+
+    'border:2px solid #1b0f0c;background:#f5f1e6;box-shadow:0 3px 0 #1b0f0c,0 4px 12px rgba(0,0,0,.5);display:grid;place-items:center;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent}'+
+    '#btnMusique svg{width:26px;height:26px}#btnMusique:active{transform:translateY(2px);box-shadow:0 1px 0 #1b0f0c}';
+  document.head.appendChild(st);
+  const draw=()=>{b.setAttribute('aria-label',musicOn?'Couper la musique':'Remettre la musique');
+    b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="#1b0f0c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3" fill="#d62828"/><circle cx="17" cy="16" r="3" fill="#d62828"/>'+
+      (musicOn?'':'<path d="M3 3l18 18" stroke="#d62828" stroke-width="3"/>')+'</svg>';};
+  draw();
+  ['pointerdown','mousedown','touchstart'].forEach(t=>b.addEventListener(t,e=>e.stopPropagation()));
+  b.addEventListener('click',e=>{e.stopPropagation();
+    musicOn=!musicOn;try{localStorage.setItem('ricardParfait.musique',musicOn?'on':'off');}catch(err){}
+    if(musicOn){initAudio();if(AC&&AC.state==='suspended')AC.resume().catch(()=>{});startMusic();}else MUSIC.pause();
+    draw();});
+  document.body.appendChild(b);
+})();
 function beep(f,dur,type='square',vol=0.1,slide=0,delay=0){
   if(!AC)return;
   try{const t0=AC.currentTime+delay,o=AC.createOscillator(),g=AC.createGain();
@@ -529,6 +565,7 @@ function drawCamZone(c){
 function newGame(){
   Object.assign(G,{score:0,lives:3,combo:1,round:0,puddle:0,served:0,newBest:false,shake:0});
   parts=[];B=null;SFX.start();newRound();
+  if(window.JohnnyPMU)JohnnyPMU.debutPartie();
 }
 function newRound(){
   G.round++;const n=G.round;
@@ -561,9 +598,11 @@ function endGame(){
   G.state='over';G.st=0;
   if(G.score>G.best){G.best=G.score;G.newBest=true;try{localStorage.setItem('ricardParfait.best',String(G.best));}catch(e){}}
   say('end','angry',3);
+  if(window.JohnnyPMU)JohnnyPMU.finDePartie();
 }
 function press(){
   initAudio();if(AC&&AC.state==='suspended')AC.resume().catch(()=>{});
+  if(!musicStarted)startMusic();
   if(G.state==='title'){newGame();return;}
   if(G.state==='over'){if(G.st>1)newGame();return;}
   if(G.state==='ready'){G.state='pouring';G.holding=true;}
@@ -646,5 +685,6 @@ requestAnimationFrame(loop);
 })();
 </script>
 <script src="../compteur.js" data-jeu="ricard-parfait"></script>
+<script src="../retour.js"></script>
 </body>
 </html>
