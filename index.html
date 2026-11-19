@@ -259,6 +259,8 @@
   const GAMES = [
     { titre: "Le Ricard Parfait", dossier: "ricard-parfait", emoji: "🥃", image: "ricard-parfait/vignette.jpg",
       description: "Sers un jaune à Johnny : dose parfaite ou catastrophe au comptoir ?" },
+    { titre: "Fayot Airlines", dossier: "fayot-airlines", emoji: "💨", image: "fayot-airlines/vignette.jpg",
+      description: "Johnny s'envole à la force des fayots : mange, pète, et évite les bouteilles !" },
   ];
 
   const digits = (n, len) => String(Math.max(0, n | 0)).padStart(len, "0").split("").map(d => `<b>${d}</b>`).join("");
@@ -365,7 +367,7 @@
   /* Coup de pouce au démarrage : ajouté au vrai chiffre à l'affichage. */
   const BONUS = { visites: 121, "ricard-parfait": 124 };
   /* Derniers chiffres affichés connus (coup de pouce compris). À remonter de temps en temps. */
-  const PLANCHER = { visites: 175, "parties-ricard-parfait": 150 };
+  const PLANCHER = { visites: 182, "parties-ricard-parfait": 154, "parties-fayot-airlines": 0 };
 
   const memoLire = k => { try { const v = parseInt(localStorage.getItem("jpmu." + k), 10); return isNaN(v) ? null : v; } catch (e) { return null; } };
   const memoEcrire = (k, v) => { try { localStorage.setItem("jpmu." + k, String(v)); } catch (e) {} };
