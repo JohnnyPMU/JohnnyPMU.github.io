@@ -50,7 +50,7 @@
     return demander(ABACUS + "/hit/johnnypmu/" + cle, { keepalive: true });
   }
 
-  window.JohnnyCompteurs = { lire: lire, incrementer: incrementer, service: FIREBASE_URL ? "firebase" : "abacus" };
+  window.JohnnyCompteurs = { lire: lire, incrementer: incrementer, service: FIREBASE_URL ? "firebase" : "abacus", firebase: FIREBASE_URL };
 
   /* --- dans un jeu : +1 partie au premier appui --- */
   var s = document.currentScript;

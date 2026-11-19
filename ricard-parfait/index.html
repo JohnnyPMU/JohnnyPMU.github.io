@@ -599,6 +599,8 @@ function endGame(){
   if(G.score>G.best){G.best=G.score;G.newBest=true;try{localStorage.setItem('ricardParfait.best',String(G.best));}catch(e){}}
   say('end','angry',3);
   if(window.JohnnyPMU)JohnnyPMU.finDePartie();
+  const scoreFinal=G.score;
+  if(window.JohnnyClassement)setTimeout(()=>{if(G.state==='over')JohnnyClassement.finDePartie('ricard-parfait',scoreFinal);},1400);
 }
 function press(){
   initAudio();if(AC&&AC.state==='suspended')AC.resume().catch(()=>{});
@@ -686,5 +688,6 @@ requestAnimationFrame(loop);
 </script>
 <script src="../compteur.js" data-jeu="ricard-parfait"></script>
 <script src="../retour.js"></script>
+<script src="../classement.js"></script>
 </body>
 </html>

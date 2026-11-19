@@ -113,6 +113,10 @@
   .digits b:last-child{color:#c21d14}
   .play{margin-top:clamp(6px,1.6vw,10px);font-weight:600;font-size:clamp(8px,2.3vw,14px);text-transform:uppercase;letter-spacing:.03em;color:#f0d9be;white-space:nowrap;
     padding:3px clamp(6px,1.8vw,14px);border:1px solid #1d0402;border-radius:3px;background:linear-gradient(180deg,#8a2a1f,#4f130d);box-shadow:inset 0 1px 0 rgba(255,220,200,.3)}
+  /* bouton Top 10 : petite plaque d'acier, texte or */
+  .top10{margin-top:clamp(5px,1.4vw,8px);font-weight:600;font-size:clamp(8px,2.2vw,13px);text-transform:uppercase;letter-spacing:.08em;color:#e6be6a;white-space:nowrap;cursor:pointer;
+    padding:3px clamp(6px,1.8vw,14px);border:1px solid #000;border-radius:3px;background:var(--brushed),linear-gradient(180deg,#3d3d3d,#222);box-shadow:inset 0 1px 0 rgba(255,255,255,.15)}
+  .top10:hover{color:#ffd77e}
   .card.soon{opacity:.6}
   .card.soon .thumb.moto img{filter:drop-shadow(0 6px 6px rgba(0,0,0,.8)) grayscale(.6)}
   .card.soon h3{margin-top:clamp(2px,1vw,6px)}
@@ -161,6 +165,7 @@
     .card:not(.soon) .meter small{font-size:12px}
     .card:not(.soon) .digits b{width:24px;height:32px;font-size:22px}
     .card:not(.soon) .play{align-self:stretch;font-size:18px;padding:12px;margin-top:12px;border-radius:5px}
+    .card:not(.soon) .top10{align-self:stretch;font-size:15px;padding:10px;margin-top:8px;border-radius:5px}
     /* « prochainement » : 2 petites cartes côte à côte */
     .card.soon{padding:6px 6px 12px}
     .card.soon h3{font-size:16px}
@@ -242,6 +247,7 @@
 </div>
 
 <script src="compteur.js"></script>
+<script src="classement.js"></script>
 <script>
   /* ============================================================
      LISTE DES JEUX
@@ -269,6 +275,7 @@
         <div class="spacer"></div>
         <div class="meter"><div class="digits" data-jeu="${g.dossier}">${digits(0, 4)}</div><small>Parties<br>jouées</small></div>
         <span class="play">▶ Jouer maintenant</span>
+        <span class="top10" role="button" tabindex="0" data-top="${g.dossier}" data-titre="${g.titre}">★ Top 10 ★</span>
       </a>`);
   const total = Math.max(3, Math.ceil(cards.length / 3) * 3);
   for (let i = cards.length; i < total; i++) {
@@ -282,6 +289,16 @@
   }
   document.getElementById("games").innerHTML = cards.join("");
   document.getElementById("y").textContent = new Date().getFullYear();
+
+  /* ---------- boutons Top 10 (dans la carte, sans ouvrir le jeu) ---------- */
+  document.querySelectorAll(".top10[data-top]").forEach(b => {
+    const ouvrir = e => {
+      e.preventDefault(); e.stopPropagation();
+      if (window.JohnnyClassement) JohnnyClassement.ouvrir(b.dataset.top, { theme: "site", titre: b.dataset.titre });
+    };
+    b.addEventListener("click", ouvrir);
+    b.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") ouvrir(e); });
+  });
 
   /* ---------- bouton blague : 1er clic = « loser », puis on descend aux jeux ---------- */
   const sonLoser = new Audio("loser.mp3");
