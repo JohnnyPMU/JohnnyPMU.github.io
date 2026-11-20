@@ -22,3 +22,4 @@
 |---|---|---|
 | 🥃 | **Le Ricard Parfait** | [▶ Jouer](https://johnnypmu.github.io/ricard-parfait/) |
 | 💨 | **Fayot Airlines** | [▶ Jouer](https://johnnypmu.github.io/fayot-airlines/) |
+| 🦶 | **Retour à la Casbah** | [▶ Jouer](https://johnnypmu.github.io/retour-a-la-casbah/) |
