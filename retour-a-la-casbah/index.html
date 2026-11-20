@@ -16,7 +16,7 @@ canvas{display:block;touch-action:none;box-shadow:0 0 50px #000}
 <script>
 (()=>{
 const W=540,H=960,CAM=240,VH=H-CAM,INK='#1b0f0c',SKIN='#f2b080',FONT='Bangers, Impact, sans-serif';
-const GY=862,START_X=200,PMU_X=START_X+15000,TW=1080,TRIES=3,GRAV=900,ZFLY=0.55;
+const GY=862,START_X=200,PMU_X=START_X+15000,TW=1080,TRIES=1,GRAV=900,ZFLY=0.55;
 const BX=446,BY=838,BR=66;
 const cv=document.getElementById('c'),ctx=cv.getContext('2d');
 let S=1,DPR=1,t=0;
@@ -650,7 +650,7 @@ function drawHUD(c){
   c.fillStyle='rgba(25,12,6,0.88)';c.fillRect(0,0,W,56);c.fillStyle='#ffd23f';c.fillRect(0,56,W,4);c.fillStyle=INK;c.fillRect(0,60,W,3);
   txt(c,'DISTANCE',20,13,15,'#fff',{align:'left',lw:4});
   txt(c,distM()+' M',20,37,32,'#ffd23f',{align:'left',lw:6});
-  txt(c,'ESSAI '+G.try+'/'+TRIES,270,30,30,'#fff',{lw:6});
+  txt(c,'DIRECTION PMU',270,30,28,'#fff',{lw:6});
   txt(c,'POINTS',520,13,15,'#fff',{align:'right',lw:4});
   txt(c,String(J.pts),520,37,32,'#35d65a',{align:'right',lw:6});
   // mini-map
@@ -729,7 +729,7 @@ function drawResult(c){
   c.fillStyle='rgba(15,6,2,0.55)';c.fillRect(0,240,W,H-240);
   const sc=easeOutBack(Math.min(1,G.st/0.25));
   c.save();c.translate(270,560);c.scale(sc,sc);c.translate(-270,-560);
-  txt(c,'ESSAI '+G.try+' / '+TRIES,270,372,50,'#ffd23f',{rot:-0.04,lw:9,shadow:'#d62828'});
+  txt(c,'ATTERRISSAGE !',270,372,50,'#ffd23f',{rot:-0.04,lw:9,shadow:'#d62828'});
   rrPath(c,60,410,420,300,24);ink(c,'rgba(255,248,230,0.96)',5);
   const rows=[['DISTANCE',r.m+' M'],['OBJETS RAMASSÉS','+'+r.pts]];
   if(r.bonus)rows.push([r.reason==='door'?'JACKPOT PMU':'DEVANT LE PMU','+'+r.bonus]);
@@ -748,10 +748,10 @@ function drawOver(c){
   txt(c,'FIN DE LA',270,310,54,'#fff',{rot:-0.06,lw:9,shadow:'#d62828'});
   txt(c,'SOIRÉE !',270,374,80,'#ffd23f',{rot:-0.04,lw:11,shadow:'#d62828'});
   rrPath(c,60,420,420,250,24);ink(c,'rgba(255,248,230,0.96)',5);
-  txt(c,'MEILLEUR ESSAI',270,454,30,'#d62828',{lw:0});
+  txt(c,'TON SCORE',270,454,30,'#d62828',{lw:0});
   const fin=Math.max(0,...G.scores);
   txt(c,String(fin),270,514,78,'#ffd23f',{lw:11});
-  txt(c,'ESSAIS : '+G.scores.join('  ·  '),270,580,27,INK,{lw:0,max:380});
+  txt(c,'DISTANCE : '+(G.res?G.res.m:0)+' M',270,580,27,INK,{lw:0,max:380});
   txt(c,'RECORD : '+G.best,270,628,27,'#1e4fd8',{lw:0});
   if(G.newBest&&Math.sin(t*10)>-0.3)txt(c,'NOUVEAU RECORD !',270,716,42,'#ff3df0',{rot:-0.06,lw:9});
   button(c,'ENCORE UNE TOURNÉE !',820,'#ff4b2b',G.st>1&&!G.topEnAttente);
